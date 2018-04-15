@@ -8,7 +8,7 @@ import Card from './Card';
 class Application extends React.Component {
     
     // 데이터 가져오기
-    constructor() {
+    constructor(){
         super();
         
         this.state = {
@@ -17,50 +17,39 @@ class Application extends React.Component {
         }
         
         this.getList = this.getList.bind(this);
-        
     }
     
-    getList() {
+    getList(){
         axios.get('http://localhost:4000/company') // 요청하면 response를 넘겨받음
-            .then((response)=>{ //성공하면 then
+            .then(response=>{ //성공하면 then
                 console.log(response.data); // 콘솔로 response 잘 넘어오는지 확인
                 this.setState({
                     count : response.data.count,
                     company : response.data.company
-                })
-            })
-            .catch((error)=>{ // 실패하면 catch
-                console.log(error);
+                });
+            }).catch(error=>{ // 실패하면 catch
+            
             });
     }
-    
-	render() {
+	
+    render(){
         
-        const {count, company} = this.state;
+        const { count , company } = this.state;
         
-		return(
-            <div>    
+		return (
+			<div>
                 <button onClick={this.getList}>데이터 가져오기</button>
                 <div>{count}</div> {/* 13으로 바뀔것 */}
-                
                 <hr style={{ margin : '10px 0' }} />
                 <div className="container">
                     {company.map((value)=>{
                         console.log(value.name)
-                        return <Card key={value.id} info={value} />
-                })} {/* map메소드는 뿌려줄수있음 중요! */}
+                        return <Card info={value} />
+                    })}
+                </div>
             </div>
-        </div>    
-            
-     
 		)
 	}
 }
 
 export default Application;
-
-
-
-
-
-
